@@ -1,0 +1,113 @@
+#data-table {
+  th, td {
+    text-align: center;
+    width: 20%;
+  }
+}
+
+.input-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  label {
+    margin-left: 5px;
+  }
+}
+
+.check-button {
+  margin-right: 10px;
+}
+
+#box1 {
+  aspect-ratio: 1/1;
+}
+
+@media only screen and (max-width: 775px) {
+  #box1 {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 10%;
+  }
+
+  .y-and-buttons {
+    margin-left: 10px;
+  }
+
+  .buttons-area {
+    margin-top: 1rem;
+    display: flex;
+  }
+
+  .data-table {
+    width: 100%;
+  }
+
+  .submit-and-clear-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 1189px) and (min-width: 776px) {
+  #box1 {
+    width: 50%;
+    max-width: 50vh;
+  }
+
+  .buttons-area {
+    margin-left: 5%;
+    width: 30%;
+  }
+
+  .input-area {
+    display: flex;
+  }
+
+  .data-table {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .submit-and-clear-buttons {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+@media only screen and (min-width: 1190px) {
+  #box1 {
+    width: 100%;
+    aspect-ratio: 1/1;
+  }
+
+  .input-area {
+    width: 32%;
+    margin-left: 1%;
+    margin-right: 3%;
+    float: right;
+  }
+
+  .data-table {
+    width: 60%;
+    float: left
+  }
+
+  .buttons-area {
+    width: 30%;
+  }
+
+  .y-and-buttons {
+    margin: 5%;
+    display: compact;
+  }
+
+  .submit-and-clear-buttons {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.submit-and-clear-buttons > * {
+  margin-bottom: 0.2em; /* Adjust the value as needed */
+}

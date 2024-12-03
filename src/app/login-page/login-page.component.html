@@ -1,0 +1,51 @@
+<div class="header">
+    <h1>
+        Выполнил: Козлов Василий Сергеевич P3215
+    </h1>
+    <h1>
+        Вариант: 1235
+    </h1>
+</div>
+<div class="login-page-main">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <div class="content">
+        <span class="title">Web-lab 4 😎</span>
+
+        <div class="content-input">
+          <input type="text" pInputText formControlName="login" placeholder="login">
+        </div>
+
+        <p-message *ngIf="isLoginTouched() && !isLoginLongEnough()"
+                   severity="error"
+                   text="Login must be at lest {{ loginMinLength }} characters long">
+        </p-message>
+
+        <p-message *ngIf="isLoginTouched() && !isLoginValid()"
+                   severity="error"
+                   text="Login must contain only letters and numbers">
+        </p-message>
+
+        <div class="content-input">
+          <input type="password" pInputText formControlName="password" placeholder="password">
+        </div>
+
+        <p-message
+          *ngIf="isPasswordTouched() && !isPasswordLongEnough()"
+          severity="error" text="Password must be at least {{passwordMinLength}} characters long">
+        </p-message>
+
+        <p-message
+          *ngIf="isPasswordTouched() && isPasswordLongEnough() && !isPasswordStrongEnough()"
+          severity="error"
+          text="Password must contain uppercase, lowercase, number and special character">
+        </p-message>
+
+        <div>
+          <p-button label="Login" type="submit" [disabled]="loginForm.invalid" class="login-button"></p-button>
+          <p-button label="Register" type="button" [disabled]="loginForm.invalid" (click)="onRegister()"></p-button>
+        </div>
+
+        <p-message severity="error" *ngIf="msg">{{ msg }}</p-message>
+      </div>
+    </form>
+</div>

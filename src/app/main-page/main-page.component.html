@@ -1,0 +1,59 @@
+<div class="main-page">
+  <div class="input-area">
+    <div id="box1"></div>
+    <div class="buttons-area">
+      <table>
+        <tr>
+          <td>
+            <div class="input-checkbox" *ngFor="let x of availableXValues">
+              <p-checkbox name="groupname" value="{{x}}" [(ngModel)]="selectedXOptions" inputId="x{{x}}"/>
+              <label class="checkbox-label" for="x{{x}}">x={{ x }}</label>
+            </div>
+          </td>
+          <td>
+            <div class="input-checkbox" *ngFor="let r of availableRValues">
+              <p-checkbox name="groupname" value="{{r}}" [(ngModel)]="selectedROptions" inputId="r{{r}}"
+                          (onChange)="rChanged()"/>
+              <label class="checkbox-label" for="r{{r}}">r={{ r }}</label>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="y-and-buttons">
+        <div>
+          <label for="y" style="margin-right: 10px">y:</label>
+          <p-inputNumber inputId="y" [(ngModel)]="value" min="-3" max="3" mode="decimal" [maxFractionDigits]="30"
+                         [useGrouping]="false"/>
+        </div>
+        <div style="margin-top: 10px;" class="submit-and-clear-buttons">
+          <p-button label="Проверить" type="button" (click)="checkButtonClick()"
+                    class="check-button"/>
+          <p-button label="Очистить" type="button" styleClass="p-button-danger"
+                    (click)="clearButtonClick()" class="clear-button"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="data-table">
+    <p-table [value]="points" [scrollable]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>x</th>
+          <th>y</th>
+          <th>R</th>
+          <th>В области?</th>
+          <th>Время исполнения, нс</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-checkResult>
+        <tr>
+          <td>{{ checkResult.x | number:'1.2-2' }}</td>
+          <td>{{ checkResult.y | number:'1.2-2' }}</td>
+          <td>{{ checkResult.r }}</td>
+          <td>{{ checkResult.inArea }}</td>
+          <td>{{ checkResult.executionTimeNs }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

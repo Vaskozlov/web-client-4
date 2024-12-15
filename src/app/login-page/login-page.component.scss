@@ -1,7 +1,7 @@
 .header {
-    position: fixed;
-    top: 0;
-    width: 100%;
+    position: absolute;
+    top: 50px;
+    width: 95%;
     text-align: center;
 
     h1 {
@@ -29,7 +29,6 @@
     gap: 1rem;
     padding: 2rem;
     width: 60vw;
-    min-width: 300px;
     max-width: 400px;
 }
 
@@ -44,7 +43,7 @@
 
 .title {
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: x-large;
     text-align: center;
     width: 100%;
 }

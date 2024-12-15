@@ -12,37 +12,37 @@
         <span class="title">Web-lab 4 😎</span>
 
         <div class="content-input">
-          <input type="text" pInputText formControlName="login" placeholder="login">
+          <input type="text" pInputText formControlName="login" placeholder="логин">
         </div>
 
         <p-message *ngIf="isLoginTouched() && !isLoginLongEnough()"
                    severity="error"
-                   text="Login must be at lest {{ loginMinLength }} characters long">
+                   text="Логин должен содержать хотя бы {{ loginMinLength }} символов">
         </p-message>
 
         <p-message *ngIf="isLoginTouched() && !isLoginValid()"
                    severity="error"
-                   text="Login must contain only letters and numbers">
+                   text="Логин может содержать только латинские буквы и цифры">
         </p-message>
 
         <div class="content-input">
-          <input type="password" pInputText formControlName="password" placeholder="password">
+          <input type="password" pInputText formControlName="password" placeholder="пароль">
         </div>
 
         <p-message
           *ngIf="isPasswordTouched() && !isPasswordLongEnough()"
-          severity="error" text="Password must be at least {{passwordMinLength}} characters long">
+          severity="error" text="Пароль должен содержать хотя бы {{passwordMinLength}} символов">
         </p-message>
 
         <p-message
           *ngIf="isPasswordTouched() && isPasswordLongEnough() && !isPasswordStrongEnough()"
           severity="error"
-          text="Password must contain uppercase, lowercase, number and special character">
+          text="Пароль должен содержать заглавную и маленькую латинскую букву, цифру и специальный символ">
         </p-message>
 
         <div>
-          <p-button label="Login" type="submit" [disabled]="loginForm.invalid" class="login-button"></p-button>
-          <p-button label="Register" type="button" [disabled]="loginForm.invalid" (click)="onRegister()"></p-button>
+          <p-button label="Войти" type="submit" [disabled]="loginForm.invalid" class="login-button"></p-button>
+          <p-button label="Зарегестрироваться" type="button" [disabled]="loginForm.invalid" (click)="onRegister()"></p-button>
         </div>
 
         <p-message severity="error" *ngIf="msg">{{ msg }}</p-message>

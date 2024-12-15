@@ -1,4 +1,5 @@
 <div class="main-page">
+  <p-button icon="pi pi-sign-out" label="Выйти" (click)="onLogout()" [rounded]="true" [text]="true" class="logout-button"></p-button>
   <div class="input-area">
     <div id="box1"></div>
     <div class="buttons-area">
@@ -12,7 +13,7 @@
           </td>
           <td>
             <div class="input-checkbox" *ngFor="let r of availableRValues">
-              <p-checkbox name="groupname" value="{{r}}" [(ngModel)]="selectedROptions" inputId="r{{r}}"
+              <p-checkbox name="r-checkboxes" value="{{r}}" [(ngModel)]="selectedROptions" inputId="r{{r}}"
                           (onChange)="rChanged()"/>
               <label class="checkbox-label" for="r{{r}}">r={{ r }}</label>
             </div>

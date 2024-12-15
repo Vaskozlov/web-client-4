@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
+import { OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {MessageModule} from 'primeng/message';
 import {CommonModule} from '@angular/common';
-import {createUrlWithParameters} from '../../query';
+import {createUrlWithParameters} from '../lib/query';
 import {Router} from '@angular/router';
 
 @Component({
@@ -14,33 +15,19 @@ import {Router} from '@angular/router';
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss'
 })
-export class LoginPageComponent {
-  loginForm: FormGroup;
+export class LoginPageComponent implements OnInit{
+  public static tokenExpired = false;
 
+  loginForm: FormGroup;
   msg = '';
   loginMinLength = 4;
   passwordMinLength = 8;
 
-  private tryToLoadLoginAndPasswordFromLocalStorage() {
-    const loginFromLocalStorage = localStorage.getItem('login');
-
-    if (loginFromLocalStorage) {
-      this.loginForm.controls['login'].setValue(loginFromLocalStorage);
-    }
-
-    const passwordFromLocalStorage = localStorage.getItem('password');
-
-    if (passwordFromLocalStorage) {
-      this.loginForm.controls['password'].setValue(passwordFromLocalStorage);
-    }
-  }
-
-  private tryToSaveLoginAndPasswordToLocalStorage() {
+  private tryToSaveAccessTokenToLocalStorage(token: string) {
     try {
-      localStorage.setItem('login', this.loginForm.controls['login'].value);
-      localStorage.setItem('password', this.loginForm.controls['password'].value);
+      localStorage.setItem('access-token', token);
     } catch (e) {
-
+      console.error('Failed to save access token to local storage');
     }
   }
 
@@ -57,12 +44,18 @@ export class LoginPageComponent {
         Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')
       ]]
     });
+  }
 
-    this.tryToLoadLoginAndPasswordFromLocalStorage();
+  ngOnInit() {
+    if (LoginPageComponent.tokenExpired) {
+      console.log('Token expired');
+      this.msg = 'Время сессии истекло';
+      LoginPageComponent.tokenExpired = false;
+    }
   }
 
   async onLogin() {
-    const url = createUrlWithParameters('http://localhost:8080/web-lab-4/auth', {
+    const url = createUrlWithParameters('http://localhost:8080/web-lab-4/api/auth/login', {
       login: this.loginForm.controls['login'].value,
       password: this.loginForm.controls['password'].value,
     });
@@ -70,16 +63,16 @@ export class LoginPageComponent {
     const response = await fetch(url, {method: 'GET', mode: 'cors'});
 
     if (!response.ok) {
-      this.msg = 'Invalid login or password';
+      this.msg = 'Неправильный логин или пароль';
       return;
     }
 
-    this.tryToSaveLoginAndPasswordToLocalStorage();
+    this.tryToSaveAccessTokenToLocalStorage(response.headers.get('Authorization')!!);
     await this.router.navigate(['/main']);
   }
 
   async onRegister() {
-    const url = createUrlWithParameters('http://localhost:8080/web-lab-4/register', {
+    const url = createUrlWithParameters('http://localhost:8080/web-lab-4/api/auth/register', {
       login: this.loginForm.controls['login'].value,
       password: this.loginForm.controls['password'].value,
     });
@@ -87,13 +80,12 @@ export class LoginPageComponent {
     const response = await fetch(url, {method: 'GET', mode: 'cors'});
 
     if (!response.ok) {
-      this.msg = 'User with the same login already exists';
+      this.msg = 'Пользователь с данным логином уже существует';
       return;
     }
 
-    this.tryToSaveLoginAndPasswordToLocalStorage();
-
-    this.msg = 'Registration succeed';
+    this.tryToSaveAccessTokenToLocalStorage(response.headers.get('Authorization')!!);
+    await this.router.navigate(['/main']);
   }
 
   isPasswordTouched() {

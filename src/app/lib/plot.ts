@@ -70,7 +70,7 @@ export class Plot {
     });
 
     this.board.highlightInfobox = function (x: any, y: any, el: any) {
-      this.infobox.setText(`(${x}R, ${y}R, R=${el.visProp.radius})`);
+      this.infobox.setText(`(${x}R, ${y}R, R=${el.visProp.displayedradius})`);
     };
 
     this.drawAreas();
@@ -90,6 +90,10 @@ export class Plot {
   // @ts-ignore
   public drawPoint(x: number, y: number, r: number, color: string, realR: number = null): void {
     realR = realR === null ? r : realR;
+
+    // r = current
+
+    console.log(r, realR, x / r * realR, y / r * realR);
 
     this.createdPoints.push(
       this.board.create('point', [x / r, y / r], {
